@@ -15,12 +15,15 @@ public class RoutesConfig {
 	@Bean
 	public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
 	    return builder.routes()
-	      .route("SMARTADDRESS-SERVICE", r -> r
-	        .path("/smartaddress-api/**")
-	        .uri("lb://SMARTADDRESS-SERVICE"))
-	      .route("SMARTUSER-SERVICE", r -> r
-	        .path("/smartuser-api/**")
-	        .uri("lb://SMARTUSER-SERVICE"))
+	      .route("SmartUser", r -> r
+	    		.path("/smartuser-api/**")
+	    		.uri("lb://SmartUser"))
+	      .route("SmartAddress", r -> r
+	  	        .path("/smartaddress-api/**")
+	  	        .uri("lb://SmartAddress"))
+	      .route("SmartProfile", r -> r
+	  	        .path("/smartprofile-api/**")
+	  	        .uri("lb://SmartProfile"))
 	    .build();
 	}
 	
