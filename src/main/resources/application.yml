@@ -3,19 +3,25 @@ server:
 spring:
    application:
       name: API-GATEWAY
-#   could:
-#      config:
-#         enabled: false   
-#      gateway:
-#         routes:
-#         - id: SMARTUSER-SERVICE
-#           uri: lb://SMARTUSER-SERVICE
-#           predicates:
-#           - Path=/smartuser-api/**
-#         - id: SMARTADDRESS-SERVICE
-#           uri: lb://SMARTADDRESS-SERVICE
-#           predicates:
-#           - Path=/smartaddress-api/**
+   cloud:
+      gateway:
+         globalcors:
+            add-to-simple-url-handler-mapping: true
+            corsConfigurations:
+               '[/**]':
+                  allowedOrigins: "*"
+                  allowedHeaders: "*"
+                  allowedMethods: "*"
+                  exposed-headers: "*"
+#          routes:
+#          - id: SmartUser
+#            uri: lb://SmartUser
+#            predicates:
+#            - Path=/smartuser-api/**
+#          - id: SmartAddress
+#            uri: lb://SmartAddress
+#            predicates:
+#            - Path=/smartaddress-api/**
       
 #Eureka settings:
 eureka:

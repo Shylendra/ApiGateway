@@ -1,8 +1,12 @@
 package com.smartapps.apigateway.config;
 
+import java.util.function.Function;
+
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.builder.GatewayFilterSpec;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+import org.springframework.cloud.gateway.route.builder.UriSpec;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -11,21 +15,52 @@ import org.springframework.web.reactive.function.client.WebClient;
 @EnableDiscoveryClient
 public class RoutesConfig {
 
-	/* This is required as application.yml config not working */
+	/* https://stackoverflow.com/questions/74398260/request-from-angular-to-spring-gateway-fails-cors-error */
 	@Bean
-	public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+	public RouteLocator myRoutes(RouteLocatorBuilder builder, Function<GatewayFilterSpec, UriSpec> brutalCorsFilters) {
 	    return builder.routes()
 	      .route("SmartUser", r -> r
 	    		.path("/smartuser-api/**")
+	    		.filters(brutalCorsFilters)
 	    		.uri("lb://SmartUser"))
 	      .route("SmartAddress", r -> r
 	  	        .path("/smartaddress-api/**")
+	  	        .filters(brutalCorsFilters)
 	  	        .uri("lb://SmartAddress"))
 	      .route("SmartProfile", r -> r
 	  	        .path("/smartprofile-api/**")
+	  	        .filters(brutalCorsFilters)
 	  	        .uri("lb://SmartProfile"))
+	      .route("SmartReferenceData", r -> r
+		  	        .path("/smartreferencedata-api/**")
+		  	        .filters(brutalCorsFilters)
+		  	        .uri("lb://SmartReferenceData"))
 	    .build();
 	}
+	
+	@Bean
+	Function<GatewayFilterSpec, UriSpec> brutalCorsFilters() {
+	    return f -> f
+	            .setResponseHeader("Access-Control-Allow-Origin", "*")
+	            .setResponseHeader("Access-Control-Allow-Methods", "*")
+	            .setResponseHeader("Access-Control-Expose-Headers", "*");
+	}
+	
+//	/* This is required as application.yml config not working */
+//	@Bean
+//	public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+//	    return builder.routes()
+//	      .route("SmartUser", r -> r
+//	    		.path("/smartuser-api/**")
+//	    		.uri("lb://SmartUser"))
+//	      .route("SmartAddress", r -> r
+//	  	        .path("/smartaddress-api/**")
+//	  	        .uri("lb://SmartAddress"))
+//	      .route("SmartProfile", r -> r
+//	  	        .path("/smartprofile-api/**")
+//	  	        .uri("lb://SmartProfile"))
+//	    .build();
+//	}
 	
 	/* This is required for Loadbalancer(lb:) to work */
     @Bean
