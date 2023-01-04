@@ -27,14 +27,18 @@ public class RoutesConfig {
 	  	        .path("/smartaddress-api/**")
 	  	        .filters(brutalCorsFilters)
 	  	        .uri("lb://SmartAddress"))
-	      .route("SmartProfile", r -> r
-	  	        .path("/smartprofile-api/**")
-	  	        .filters(brutalCorsFilters)
-	  	        .uri("lb://SmartProfile"))
 	      .route("SmartReferenceData", r -> r
 		  	        .path("/smartreferencedata-api/**")
 		  	        .filters(brutalCorsFilters)
 		  	        .uri("lb://SmartReferenceData"))
+	      .route("SmartJourney", r -> r
+		  	        .path("/smartjourney-api/**")
+		  	        .filters(brutalCorsFilters)
+		  	        .uri("lb://SmartJourney"))
+	      .route("SmartProfile", r -> r
+		  	        .path("/smartprofile-api/**")
+		  	        .filters(brutalCorsFilters)
+		  	        .uri("lb://SmartProfile"))
 	    .build();
 	}
 	
