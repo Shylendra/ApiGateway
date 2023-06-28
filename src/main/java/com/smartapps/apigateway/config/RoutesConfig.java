@@ -39,6 +39,14 @@ public class RoutesConfig {
 		  	        .path("/smartprofile-api/**")
 		  	        .filters(brutalCorsFilters)
 		  	        .uri("lb://SmartProfile"))
+	      .route("SmartNotification", r -> r
+		  	        .path("/smartnotification-api/**")
+		  	        .filters(brutalCorsFilters)
+		  	        .uri("lb://SmartNotification"))
+	      .route("SmartTrader", r -> r
+		  	        .path("/smarttrader-api/**")
+		  	        .filters(brutalCorsFilters)
+		  	        .uri("lb://SmartTrader"))
 	    .build();
 	}
 	
