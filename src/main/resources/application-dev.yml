@@ -1,0 +1,53 @@
+server:
+   port: 8000
+spring:
+   application:
+      name: API-GATEWAY
+   cloud:
+      gateway:
+         globalcors:
+            add-to-simple-url-handler-mapping: true
+            corsConfigurations:
+               '[/**]':
+                  allowedOrigins: "*"
+                  allowedHeaders: "*"
+                  allowedMethods: "*"
+                  exposed-headers: "*"
+#          routes:
+#          - id: SmartUser
+#            uri: lb://SmartUser
+#            predicates:
+#            - Path=/smartuser-api/**
+#          - id: SmartAddress
+#            uri: lb://SmartAddress
+#            predicates:
+#            - Path=/smartaddress-api/**
+      
+#Eureka settings:
+eureka:
+   instance:
+      preferIpAddress: true
+      hostname: eureka-0
+   client:
+      fetch-registry: true
+      register-with-eureka: true
+      serviceUrl:
+         defaultZone: http://${eureka.instance.hostname}.eureka.default.svc.cluster.local:8761/eureka
+   
+#ApiGateway logging:         
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.http.server.reactive: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.ipc.netty: DEBUG
+    reactor.netty: DEBUG      
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+                   
