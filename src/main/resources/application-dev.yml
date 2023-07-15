@@ -33,7 +33,7 @@ eureka:
     fetchRegistry: true
     registerWithEureka: true
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}.eureka:8761/eureka/
+      defaultZone: http://${eureka.instance.hostname}.eureka.default.svc.cluster.local:8761/eureka
    
 #ApiGateway logging:         
 logging:
