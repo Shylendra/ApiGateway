@@ -25,14 +25,15 @@ spring:
       
 #Eureka settings:
 eureka:
-   instance:
-      preferIpAddress: true
-      hostname: eureka-0
-   client:
-      fetch-registry: true
-      register-with-eureka: true
-      serviceUrl:
-         defaultZone: http://${eureka.instance.hostname}.eureka.default.svc.cluster.local:8761/eureka
+  instance:
+    preferIpAddress: true
+    hostname: eureka-0
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance_id:${server.port}}
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}.eureka.default.svc.cluster.local:8761/eureka
    
 #ApiGateway logging:         
 logging:
