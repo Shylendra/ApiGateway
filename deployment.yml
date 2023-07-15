@@ -18,6 +18,7 @@ spec:
         - name: api-gateway
           image: shylendra2015/api-gateway:latest
           imagePullPolicy: Always
+          args: ["--spring.profiles.active=dev"]
           ports:
             - containerPort: 8000
 
